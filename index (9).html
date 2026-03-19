@@ -1,0 +1,1666 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Acier Boxing Club — Association Sportive Thionville</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Anton&family=Barlow+Condensed:wght@400;600;700;900&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --red: #C8001A;
+    --red-dark: #9B0015;
+    --gold: #B8860B;
+    --black: #2B2B35;
+    --dark: #353542;
+    --dark2: #3F3F50;
+    --gray: #4A4A5C;
+    --light: #EDE9E2;
+    --white: #FFFFFF;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Barlow', sans-serif;
+    background: var(--black);
+    color: var(--light);
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* CUSTOM CURSOR */
+  .cursor {
+    width: 12px; height: 12px;
+    background: var(--red);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transform: translate(-50%, -50%);
+    transition: transform 0.1s, background 0.2s;
+  }
+  .cursor-ring {
+    width: 36px; height: 36px;
+    border: 1px solid rgba(200,0,26,0.5);
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9998;
+    transform: translate(-50%, -50%);
+    transition: all 0.15s ease;
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 60px;
+    background: linear-gradient(to bottom, rgba(43,43,53,0.95), transparent);
+    backdrop-filter: blur(2px);
+  }
+
+  .nav-logo {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    text-decoration: none;
+  }
+
+  .logo-icon {
+    width: 44px; height: 44px;
+    background: var(--red);
+    clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    color: white;
+    letter-spacing: 1px;
+  }
+
+  .logo-text {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 22px;
+    letter-spacing: 3px;
+    color: var(--light);
+  }
+
+  .logo-text span { color: var(--red); }
+
+  .nav-links {
+    display: flex;
+    gap: 40px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.6);
+    transition: color 0.3s;
+  }
+
+  .nav-links a:hover { color: var(--red); }
+
+  .nav-cta {
+    background: var(--red);
+    color: white !important;
+    padding: 10px 24px !important;
+    clip-path: polygon(6px 0%, 100% 0%, calc(100% - 6px) 100%, 0% 100%);
+    transition: background 0.3s !important;
+  }
+
+  .nav-cta:hover { background: var(--red-dark) !important; color: white !important; }
+
+  /* HERO */
+  .hero {
+    min-height: 100vh;
+    position: relative;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(ellipse at 70% 50%, rgba(200,0,26,0.18) 0%, transparent 60%),
+      radial-gradient(ellipse at 20% 80%, rgba(184,134,11,0.1) 0%, transparent 50%),
+      var(--black);
+  }
+
+  /* Diagonal stripe pattern */
+  .hero-bg::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background-image: repeating-linear-gradient(
+      -45deg,
+      transparent,
+      transparent 60px,
+      rgba(255,255,255,0.025) 60px,
+      rgba(255,255,255,0.025) 61px
+    );
+  }
+
+  /* Big decorative text */
+  .hero-bg::after {
+    content: 'BOXING';
+    position: absolute;
+    right: -40px;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 220px;
+    color: rgba(255,255,255,0.025);
+    letter-spacing: 20px;
+    white-space: nowrap;
+    user-select: none;
+  }
+
+  .hero-content {
+    position: relative;
+    z-index: 2;
+    padding: 0 60px;
+    max-width: 900px;
+  }
+
+  .hero-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 30px;
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .hero-badge::before {
+    content: '';
+    width: 30px;
+    height: 1px;
+    background: var(--gold);
+  }
+
+  .hero-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(72px, 11vw, 160px);
+    line-height: 0.85;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    margin-bottom: 30px;
+    animation: fadeUp 0.8s ease 0.1s both;
+  }
+
+  .hero-title .line2 {
+    color: var(--red);
+    display: block;
+    -webkit-text-stroke: 2px var(--red);
+  }
+
+  .hero-title .line3 {
+    display: block;
+    -webkit-text-stroke: 1px rgba(240,237,232,0.3);
+    color: transparent;
+    font-size: 0.7em;
+    letter-spacing: 5px;
+  }
+
+  .hero-sub {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.8;
+    color: rgba(240,237,232,0.6);
+    max-width: 480px;
+    margin-bottom: 50px;
+    animation: fadeUp 0.8s ease 0.2s both;
+  }
+
+  .hero-actions {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    animation: fadeUp 0.8s ease 0.3s both;
+  }
+
+  .btn-primary {
+    display: inline-block;
+    background: var(--red);
+    color: white;
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px 40px;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: all 0.3s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .btn-primary::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: rgba(255,255,255,0.1);
+    transform: translateX(-100%);
+    transition: transform 0.3s;
+  }
+
+  .btn-primary:hover::after { transform: translateX(0); }
+
+  .btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.6);
+    transition: color 0.3s;
+  }
+
+  .btn-secondary:hover { color: var(--light); }
+
+  .btn-secondary::before {
+    content: '';
+    width: 36px; height: 36px;
+    border: 1px solid rgba(240,237,232,0.2);
+    border-radius: 50%;
+    background: rgba(200,0,26,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .hero-stats {
+    position: absolute;
+    bottom: 60px;
+    right: 60px;
+    display: flex;
+    gap: 50px;
+    animation: fadeUp 0.8s ease 0.4s both;
+  }
+
+  .stat {
+    text-align: center;
+  }
+
+  .stat-num {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 52px;
+    color: var(--red);
+    line-height: 1;
+    display: block;
+  }
+
+  .stat-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.4);
+    display: block;
+    margin-top: 4px;
+  }
+
+  /* SECTION BASE */
+  section {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .section-header {
+    margin-bottom: 70px;
+  }
+
+  .section-eyebrow {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 5px;
+    text-transform: uppercase;
+    color: var(--red);
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    margin-bottom: 16px;
+  }
+
+  .section-eyebrow::before {
+    content: '';
+    width: 24px; height: 2px;
+    background: var(--red);
+  }
+
+  .section-title {
+    font-family: 'Anton', sans-serif;
+    font-size: clamp(40px, 5vw, 72px);
+    text-transform: uppercase;
+    line-height: 1;
+    letter-spacing: -1px;
+  }
+
+  /* ABOUT */
+  .about {
+    padding: 120px 60px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: center;
+    background: var(--dark);
+  }
+
+  .about-visual {
+    position: relative;
+  }
+
+  .about-ring {
+    width: 100%;
+    aspect-ratio: 1;
+    max-width: 440px;
+    position: relative;
+  }
+
+  /* Animated rings graphic */
+  .ring-outer {
+    position: absolute;
+    inset: 0;
+    border: 2px solid rgba(200,0,26,0.2);
+    border-radius: 50%;
+    animation: spin 20s linear infinite;
+  }
+
+  .ring-mid {
+    position: absolute;
+    inset: 30px;
+    border: 1px solid rgba(212,160,23,0.15);
+    border-radius: 50%;
+    animation: spin 15s linear infinite reverse;
+  }
+
+  .ring-center {
+    position: absolute;
+    inset: 70px;
+    background: radial-gradient(ellipse, rgba(200,0,26,0.15), var(--dark2));
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 28px;
+    letter-spacing: 4px;
+    color: var(--light);
+    flex-direction: column;
+    gap: 4px;
+    border: 1px solid rgba(200,0,26,0.3);
+  }
+
+  .ring-center span {
+    font-family: 'Barlow', sans-serif;
+    font-size: 12px;
+    color: var(--gold);
+    letter-spacing: 3px;
+    text-transform: uppercase;
+  }
+
+  .ring-dots {
+    position: absolute;
+    inset: 0;
+    animation: spin 10s linear infinite;
+  }
+
+  .ring-dot {
+    position: absolute;
+    width: 8px; height: 8px;
+    background: var(--red);
+    border-radius: 50%;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    transform-origin: 4px 220px;
+  }
+
+  .ring-dot:nth-child(2) { transform: rotate(120deg) translateX(-50%); transform-origin: 4px 220px; }
+  .ring-dot:nth-child(3) { transform: rotate(240deg) translateX(-50%); transform-origin: 4px 220px; }
+
+  .about-decoration {
+    position: absolute;
+    top: -30px; right: -30px;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 120px;
+    color: rgba(200,0,26,0.06);
+    line-height: 1;
+    user-select: none;
+  }
+
+  .about-text p {
+    font-size: 16px;
+    font-weight: 300;
+    line-height: 1.9;
+    color: rgba(240,237,232,0.65);
+    margin-bottom: 20px;
+  }
+
+  .about-features {
+    margin-top: 50px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+
+  .feature {
+    padding: 20px;
+    background: rgba(255,255,255,0.03);
+    border-left: 2px solid var(--red);
+    transition: background 0.3s;
+  }
+
+  .feature:hover { background: rgba(200,0,26,0.08); }
+
+  .feature-title {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--light);
+    margin-bottom: 6px;
+  }
+
+  .feature-desc {
+    font-size: 13px;
+    color: rgba(240,237,232,0.45);
+    line-height: 1.6;
+  }
+
+  /* PROGRAMS */
+  .programs {
+    padding: 120px 60px;
+    background: var(--black);
+  }
+
+  .programs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .program-card {
+    position: relative;
+    padding: 50px 40px;
+    background: var(--dark2);
+    overflow: hidden;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    cursor: pointer;
+  }
+
+  .program-card:hover { transform: translateY(-8px); }
+
+  .program-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(200,0,26,0.15), transparent);
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .program-card:hover::before { opacity: 1; }
+
+  .program-card::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0;
+    width: 100%; height: 3px;
+    background: var(--red);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  }
+
+  .program-card:hover::after { transform: scaleX(1); }
+
+  .program-number {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 80px;
+    color: rgba(200,0,26,0.12);
+    line-height: 1;
+    margin-bottom: -20px;
+    display: block;
+    transition: color 0.4s;
+  }
+
+  .program-card:hover .program-number { color: rgba(200,0,26,0.25); }
+
+  .program-icon {
+    font-size: 32px;
+    margin-bottom: 20px;
+  }
+
+  .program-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 26px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+    color: var(--light);
+  }
+
+  .program-age {
+    display: inline-block;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 16px;
+    padding: 4px 12px;
+    border: 1px solid rgba(212,160,23,0.3);
+  }
+
+  .program-desc {
+    font-size: 14px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240,237,232,0.5);
+  }
+
+  /* SCHEDULE */
+  .schedule {
+    padding: 120px 60px;
+    background: var(--dark);
+  }
+
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 8px;
+    margin-top: 60px;
+  }
+
+  .day-col {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .day-header {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 18px;
+    letter-spacing: 2px;
+    text-align: center;
+    padding: 14px;
+    background: var(--dark2);
+    color: rgba(240,237,232,0.4);
+    border-bottom: 2px solid transparent;
+  }
+
+  .day-header.active {
+    color: var(--red);
+    border-bottom-color: var(--red);
+  }
+
+  .session {
+    padding: 14px 16px;
+    background: rgba(200,0,26,0.08);
+    border: 1px solid rgba(200,0,26,0.15);
+    transition: all 0.3s;
+  }
+
+  .session:hover {
+    background: rgba(200,0,26,0.18);
+    border-color: var(--red);
+    transform: translateX(3px);
+  }
+
+  .session-time {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 2px;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .session-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 14px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: var(--light);
+    display: block;
+  }
+
+  .session-level {
+    font-size: 11px;
+    color: rgba(240,237,232,0.35);
+    margin-top: 3px;
+    display: block;
+  }
+
+  .session.empty {
+    background: transparent;
+    border: 1px solid rgba(255,255,255,0.04);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 80px;
+  }
+
+  .session.empty::after {
+    content: '—';
+    color: rgba(255,255,255,0.1);
+    font-size: 20px;
+  }
+
+  /* COACHES */
+  .coaches {
+    padding: 120px 60px;
+    background: var(--black);
+  }
+
+  .coaches-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 60px;
+  }
+
+  .coach-card {
+    position: relative;
+    overflow: hidden;
+    background: var(--dark2);
+    transition: transform 0.4s;
+  }
+
+  .coach-card:hover { transform: translateY(-6px); }
+
+  .coach-avatar {
+    height: 260px;
+    background: var(--gray);
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+
+  .coach-initials {
+    font-family: 'Anton', sans-serif;
+    font-size: 80px;
+    color: rgba(200,0,26,0.3);
+    letter-spacing: -2px;
+    z-index: 1;
+  }
+
+  .coach-avatar::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 50% 80%, rgba(200,0,26,0.2), transparent);
+  }
+
+  .coach-avatar::after {
+    content: '';
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    height: 50%;
+    background: linear-gradient(to top, var(--dark2), transparent);
+  }
+
+  .coach-info {
+    padding: 30px;
+  }
+
+  .coach-name {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 24px;
+    font-weight: 900;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--light);
+    margin-bottom: 6px;
+  }
+
+  .coach-role {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .coach-bio {
+    font-size: 13px;
+    font-weight: 300;
+    line-height: 1.7;
+    color: rgba(240,237,232,0.5);
+  }
+
+  .coach-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-top: 16px;
+  }
+
+  .badge {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 4px 10px;
+    border: 1px solid rgba(212,160,23,0.3);
+    color: var(--gold);
+  }
+
+  /* TARIFS */
+  .tarifs {
+    padding: 120px 60px;
+    background: var(--dark);
+  }
+
+  .tarifs-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 60px;
+  }
+
+  .tarif-card {
+    padding: 50px 40px;
+    background: var(--dark2);
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.4s;
+  }
+
+  .tarif-card:hover { transform: translateY(-4px); }
+
+  .tarif-card.featured {
+    background: var(--red-dark);
+    transform: translateY(-8px);
+  }
+
+  .tarif-card.featured:hover { transform: translateY(-12px); }
+
+  .tarif-tag {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 10px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 30px;
+    display: block;
+  }
+
+  .tarif-card.featured .tarif-tag { color: rgba(255,255,255,0.7); }
+
+  .tarif-name {
+    font-family: 'Anton', sans-serif;
+    font-size: 28px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+  }
+
+  .tarif-price {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 72px;
+    line-height: 1;
+    color: var(--red);
+    display: flex;
+    align-items: flex-start;
+    gap: 4px;
+    margin-bottom: 6px;
+  }
+
+  .tarif-card.featured .tarif-price { color: white; }
+
+  .tarif-price sup {
+    font-size: 28px;
+    margin-top: 10px;
+    font-family: 'Barlow Condensed', sans-serif;
+  }
+
+  .tarif-period {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.4);
+    margin-bottom: 40px;
+    display: block;
+  }
+
+  .tarif-card.featured .tarif-period { color: rgba(255,255,255,0.5); }
+
+  .tarif-features {
+    list-style: none;
+    margin-bottom: 40px;
+  }
+
+  .tarif-features li {
+    font-size: 14px;
+    font-weight: 300;
+    color: rgba(240,237,232,0.65);
+    padding: 10px 0;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .tarif-card.featured .tarif-features li { color: rgba(255,255,255,0.8); border-bottom-color: rgba(255,255,255,0.1); }
+
+  .tarif-features li::before {
+    content: '✓';
+    color: var(--red);
+    font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .tarif-card.featured .tarif-features li::before { color: var(--gold); }
+
+  .btn-tarif {
+    display: block;
+    text-align: center;
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 12px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    padding: 16px;
+    border: 1px solid rgba(200,0,26,0.4);
+    color: var(--light);
+    transition: all 0.3s;
+  }
+
+  .tarif-card.featured .btn-tarif {
+    background: white;
+    color: var(--red-dark);
+    border-color: white;
+  }
+
+  .btn-tarif:hover {
+    background: var(--red);
+    border-color: var(--red);
+    color: white;
+  }
+
+  /* CONTACT */
+  .contact {
+    padding: 120px 60px;
+    background: var(--black);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 100px;
+    align-items: start;
+  }
+
+  .contact-info-item {
+    display: flex;
+    gap: 20px;
+    margin-bottom: 36px;
+    padding-bottom: 36px;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+  }
+
+  .contact-icon {
+    width: 44px; height: 44px;
+    background: rgba(200,0,26,0.12);
+    border: 1px solid rgba(200,0,26,0.25);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    flex-shrink: 0;
+  }
+
+  .contact-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--red);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .contact-value {
+    font-size: 15px;
+    font-weight: 300;
+    color: rgba(240,237,232,0.7);
+    line-height: 1.6;
+  }
+
+  /* FORM */
+  .contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+  }
+
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+  }
+
+  .form-label {
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.4);
+  }
+
+  .form-input, .form-textarea, .form-select {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    padding: 14px 18px;
+    font-family: 'Barlow', sans-serif;
+    font-size: 14px;
+    color: var(--light);
+    outline: none;
+    transition: border-color 0.3s;
+  }
+
+  .form-input:focus, .form-textarea:focus, .form-select:focus {
+    border-color: var(--red);
+  }
+
+  .form-textarea { min-height: 120px; resize: vertical; }
+
+  .form-select option { background: var(--dark2); }
+
+  .btn-submit {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 18px 40px;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    cursor: pointer;
+    clip-path: polygon(10px 0%, 100% 0%, calc(100% - 10px) 100%, 0% 100%);
+    transition: background 0.3s;
+    align-self: flex-start;
+  }
+
+  .btn-submit:hover { background: var(--red-dark); }
+
+  /* FOOTER */
+  footer {
+    padding: 60px;
+    background: var(--dark);
+    border-top: 1px solid rgba(255,255,255,0.05);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .footer-logo {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 24px;
+    letter-spacing: 4px;
+    color: rgba(240,237,232,0.3);
+  }
+
+  .footer-copy {
+    font-size: 12px;
+    color: rgba(240,237,232,0.25);
+    letter-spacing: 1px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 30px;
+    list-style: none;
+  }
+
+  .footer-links a {
+    text-decoration: none;
+    font-family: 'Barlow Condensed', sans-serif;
+    font-size: 11px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.25);
+    transition: color 0.3s;
+  }
+
+  .footer-links a:hover { color: var(--red); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+  }
+
+  /* SCROLL REVEAL */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  /* DIVIDER */
+  .section-divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, rgba(200,0,26,0.5), transparent);
+    margin: 0 60px;
+  }
+
+  /* Horizontal scrolling ticker */
+  .ticker {
+    background: var(--red);
+    padding: 14px 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .ticker-inner {
+    display: inline-flex;
+    animation: ticker 25s linear infinite;
+  }
+
+  .ticker-item {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 16px;
+    letter-spacing: 6px;
+    color: rgba(255,255,255,0.85);
+    padding: 0 40px;
+  }
+
+  .ticker-dot {
+    color: rgba(255,255,255,0.4);
+  }
+
+  @keyframes ticker {
+    from { transform: translateX(0); }
+    to { transform: translateX(-50%); }
+  }
+
+</style>
+</head>
+<body>
+
+<!-- Custom cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursor-ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">
+    <div class="logo-icon">ABC</div>
+    <div class="logo-text">Acier <span>Boxing</span> Club</div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="#about">Le Club</a></li>
+    <li><a href="#programs">Programmes</a></li>
+    <li><a href="#schedule">Horaires</a></li>
+    <li><a href="#coaches">Coaches</a></li>
+    <li><a href="#tarifs">Tarifs</a></li>
+    <li><a href="#contact" class="nav-cta">S'inscrire</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-content">
+    <div class="hero-badge">Club Associatif • Région Thionville • Moselle (57)</div>
+    <h1 class="hero-title">
+      Forge<br>
+      <span class="line2">ton</span>
+      <span class="line3">caractère</span>
+    </h1>
+    <p class="hero-sub">
+      Plus qu'un sport, une école de vie. L'Acier Boxing Club vous accueille dans une ambiance familiale et bienveillante, du débutant au compétiteur.
+    </p>
+    <div class="hero-actions">
+      <a href="#contact" class="btn-primary">Essai Gratuit</a>
+      <a href="#programs" class="btn-secondary">Découvrir nos programmes</a>
+    </div>
+  </div>
+  <div class="hero-stats">
+    <div class="stat">
+      <span class="stat-num">12+</span>
+      <span class="stat-label">Années d'existence</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">180</span>
+      <span class="stat-label">Membres actifs</span>
+    </div>
+    <div class="stat">
+      <span class="stat-num">4</span>
+      <span class="stat-label">Coaches diplômés</span>
+    </div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-inner">
+    <span class="ticker-item">Boxe Anglaise</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Boxe Éducative</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Fitness Boxing</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Compétition</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Club Familial</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Thionville & Alentours</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Boxe Anglaise</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Boxe Éducative</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Fitness Boxing</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Compétition</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Club Familial</span><span class="ticker-dot">✦</span>
+    <span class="ticker-item">Thionville & Alentours</span><span class="ticker-dot">✦</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about" id="about">
+  <div class="about-visual reveal">
+    <div class="about-decoration">BOX</div>
+    <div class="about-ring">
+      <div class="ring-outer"></div>
+      <div class="ring-mid"></div>
+      <div class="ring-dots">
+        <div class="ring-dot"></div>
+        <div class="ring-dot"></div>
+        <div class="ring-dot"></div>
+      </div>
+      <div class="ring-center">
+        ABC<br>
+        <span>Est. 2012</span>
+      </div>
+    </div>
+  </div>
+  <div class="about-text reveal">
+    <div class="section-header">
+      <div class="section-eyebrow">Notre histoire</div>
+      <h2 class="section-title">Un club, une famille, une passion</h2>
+    </div>
+    <p>Fondé en 2012 à Thionville, notre association sportive est née de la volonté de rendre la boxe accessible à tous — enfants, adultes, débutants ou compétiteurs — dans un cadre sécurisé et bienveillant.</p>
+    <p>Affilié à la Fédération Française de Boxe, l'Acier Boxing Club forme des boxeurs épanouis, développe le respect mutuel et l'esprit sportif. Notre salle, idéalement située en Moselle, est le point de rencontre de passionnés venus de Thionville, Yutz, Hayange, Fameck et toute la région frontalière.</p>
+    <div class="about-features">
+      <div class="feature">
+        <div class="feature-title">Matériel Pro</div>
+        <div class="feature-desc">Rings, sacs, gants — équipements de qualité fournis</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Encadrement FFB</div>
+        <div class="feature-desc">Coaches diplômés fédéraux, brevet d'état</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Tous niveaux</div>
+        <div class="feature-desc">Du premier gant au championnat régional</div>
+      </div>
+      <div class="feature">
+        <div class="feature-title">Dès 6 ans</div>
+        <div class="feature-desc">Cours adaptés à chaque tranche d'âge</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- PROGRAMS -->
+<section class="programs" id="programs">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Ce que nous proposons</div>
+    <h2 class="section-title">Nos programmes</h2>
+  </div>
+  <div class="programs-grid">
+    <div class="program-card reveal">
+      <span class="program-number">01</span>
+      <div class="program-icon">🥊</div>
+      <div class="program-name">Boxe Éducative</div>
+      <div class="program-age">6 – 14 ans</div>
+      <p class="program-desc">Introduction à la boxe par le jeu et la technique. Développement de la coordination, de la discipline et de la confiance en soi. Aucun combat de plein contact.</p>
+    </div>
+    <div class="program-card reveal">
+      <span class="program-number">02</span>
+      <div class="program-icon">💪</div>
+      <div class="program-name">Fitness Boxing</div>
+      <div class="program-age">Adultes — tous niveaux</div>
+      <p class="program-desc">Séances cardio-boxing intenses combinant technique de boxe et conditionnement physique. Idéal pour se dépenser, sculpter sa silhouette et gérer le stress.</p>
+    </div>
+    <div class="program-card reveal">
+      <span class="program-number">03</span>
+      <div class="program-icon">🏆</div>
+      <div class="program-name">Boxe Anglaise</div>
+      <div class="program-age">Ados & Adultes</div>
+      <p class="program-desc">Entraînement technique complet avec travail au sac, pads, sparring et préparation physique. Parcours compétition possible pour les motivés.</p>
+    </div>
+    <div class="program-card reveal">
+      <span class="program-number">04</span>
+      <div class="program-icon">⚡</div>
+      <div class="program-name">Compétition</div>
+      <div class="program-age">Sur sélection</div>
+      <p class="program-desc">Programme intensif pour les boxeurs souhaitant représenter le club en compétitions officielles (régionales, nationales). Suivi individualisé et préparation mentale.</p>
+    </div>
+    <div class="program-card reveal">
+      <span class="program-number">05</span>
+      <div class="program-icon">👩</div>
+      <div class="program-name">Boxe Féminine</div>
+      <div class="program-age">Femmes adultes</div>
+      <p class="program-desc">Créneau dédié dans une atmosphère solidaire. Technique, self-défense et remise en forme dans un cadre exclusivement féminin et bienveillant.</p>
+    </div>
+    <div class="program-card reveal">
+      <span class="program-number">06</span>
+      <div class="program-icon">🌟</div>
+      <div class="program-name">Cours Particuliers</div>
+      <div class="program-age">Tous niveaux</div>
+      <p class="program-desc">Sessions individuelles avec un coach pour progresser rapidement, travailler des points précis ou préparer une compétition. Sur rendez-vous.</p>
+    </div>
+  </div>
+</section>
+
+<!-- SCHEDULE -->
+<section class="schedule" id="schedule">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Planning hebdomadaire</div>
+    <h2 class="section-title">Horaires des cours</h2>
+  </div>
+  <div class="schedule-grid reveal">
+    <div class="day-col">
+      <div class="day-header">Lundi</div>
+      <div class="session">
+        <span class="session-time">17h30 – 18h30</span>
+        <span class="session-name">Boxe Éducative</span>
+        <span class="session-level">6–10 ans</span>
+      </div>
+      <div class="session">
+        <span class="session-time">19h00 – 20h30</span>
+        <span class="session-name">Fitness Boxing</span>
+        <span class="session-level">Adultes</span>
+      </div>
+      <div class="session empty"></div>
+    </div>
+    <div class="day-col">
+      <div class="day-header">Mardi</div>
+      <div class="session">
+        <span class="session-time">18h00 – 19h00</span>
+        <span class="session-name">Boxe Féminine</span>
+        <span class="session-level">Femmes adultes</span>
+      </div>
+      <div class="session">
+        <span class="session-time">19h15 – 21h00</span>
+        <span class="session-name">Boxe Anglaise</span>
+        <span class="session-level">Ados/Adultes</span>
+      </div>
+      <div class="session empty"></div>
+    </div>
+    <div class="day-col">
+      <div class="day-header active">Mercredi</div>
+      <div class="session">
+        <span class="session-time">14h00 – 15h00</span>
+        <span class="session-name">Boxe Éducative</span>
+        <span class="session-level">6–14 ans</span>
+      </div>
+      <div class="session">
+        <span class="session-time">15h15 – 16h30</span>
+        <span class="session-name">Ados Boxing</span>
+        <span class="session-level">12–17 ans</span>
+      </div>
+      <div class="session">
+        <span class="session-time">18h00 – 19h30</span>
+        <span class="session-name">Compétition</span>
+        <span class="session-level">Sur sélection</span>
+      </div>
+    </div>
+    <div class="day-col">
+      <div class="day-header">Jeudi</div>
+      <div class="session">
+        <span class="session-time">18h00 – 19h00</span>
+        <span class="session-name">Fitness Boxing</span>
+        <span class="session-level">Adultes</span>
+      </div>
+      <div class="session">
+        <span class="session-time">19h15 – 21h00</span>
+        <span class="session-name">Boxe Anglaise</span>
+        <span class="session-level">Tous niveaux</span>
+      </div>
+      <div class="session empty"></div>
+    </div>
+    <div class="day-col">
+      <div class="day-header">Vendredi</div>
+      <div class="session">
+        <span class="session-time">17h30 – 18h30</span>
+        <span class="session-name">Boxe Éducative</span>
+        <span class="session-level">6–14 ans</span>
+      </div>
+      <div class="session">
+        <span class="session-time">19h00 – 20h30</span>
+        <span class="session-name">Boxe Féminine</span>
+        <span class="session-level">Femmes adultes</span>
+      </div>
+      <div class="session empty"></div>
+    </div>
+    <div class="day-col">
+      <div class="day-header">Samedi</div>
+      <div class="session">
+        <span class="session-time">09h30 – 11h00</span>
+        <span class="session-name">Compétition</span>
+        <span class="session-level">Sparring & prépa</span>
+      </div>
+      <div class="session">
+        <span class="session-time">11h00 – 12h30</span>
+        <span class="session-name">Open Gym</span>
+        <span class="session-level">Tous membres</span>
+      </div>
+      <div class="session empty"></div>
+    </div>
+  </div>
+</section>
+
+<div class="section-divider"></div>
+
+<!-- COACHES -->
+<section class="coaches" id="coaches">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Notre équipe</div>
+    <h2 class="section-title">Les coaches</h2>
+  </div>
+  <div class="coaches-grid">
+    <div class="coach-card reveal">
+      <div class="coach-avatar">
+        <span class="coach-initials">KM</span>
+      </div>
+      <div class="coach-info">
+        <div class="coach-name">Karim Messaoudi</div>
+        <span class="coach-role">Coach Principal — Directeur Technique</span>
+        <p class="coach-bio">Ancien champion régional Grand-Est, Karim dirige le club depuis sa fondation en 2012. Brevet d'État 2ème degré, il transmet sa passion avec rigueur et humanité.</p>
+        <div class="coach-badges">
+          <span class="badge">BE2</span>
+          <span class="badge">Arbitre FFB</span>
+          <span class="badge">+ 15 ans d'exp.</span>
+        </div>
+      </div>
+    </div>
+    <div class="coach-card reveal">
+      <div class="coach-avatar">
+        <span class="coach-initials">SB</span>
+      </div>
+      <div class="coach-info">
+        <div class="coach-name">Sophie Bernard</div>
+        <span class="coach-role">Coach Fitness & Boxe Féminine</span>
+        <p class="coach-bio">Passionnée de sport et d'accompagnement féminin, Sophie anime les cours Fitness Boxing et encadre les groupes féminins. Diplômée BPJEPS AF et certifiée FFB.</p>
+        <div class="coach-badges">
+          <span class="badge">BPJEPS</span>
+          <span class="badge">CQP Boxing</span>
+        </div>
+      </div>
+    </div>
+    <div class="coach-card reveal">
+      <div class="coach-avatar">
+        <span class="coach-initials">LF</span>
+      </div>
+      <div class="coach-info">
+        <div class="coach-name">Lucas Ferreira</div>
+        <span class="coach-role">Coach Jeunes & Compétition</span>
+        <p class="coach-bio">Ancien boxeur amateur niveau national, Lucas prend en charge les sections jeunes et le groupe compétition. Spécialisé dans la préparation mentale et physique des champions.</p>
+        <div class="coach-badges">
+          <span class="badge">Moniteur FFB</span>
+          <span class="badge">Prépa mentale</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TARIFS -->
+<section class="tarifs" id="tarifs">
+  <div class="section-header reveal">
+    <div class="section-eyebrow">Cotisations annuelles</div>
+    <h2 class="section-title">Tarifs de l'association</h2>
+  </div>
+  <div class="tarifs-grid">
+    <div class="tarif-card reveal">
+      <span class="tarif-tag">Tarif Enfant</span>
+      <div class="tarif-name">Jeune Boxeur</div>
+      <div class="tarif-price"><sup>€</sup>140</div>
+      <span class="tarif-period">Par an • 6 à 14 ans</span>
+      <ul class="tarif-features">
+        <li>2 séances / semaine</li>
+        <li>Licence FFB incluse</li>
+        <li>Équipement de base fourni</li>
+        <li>Accès aux compétitions jeunes</li>
+        <li>Assurance sportive comprise</li>
+      </ul>
+      <a href="#contact" class="btn-tarif">Inscrire mon enfant</a>
+    </div>
+    <div class="tarif-card featured reveal">
+      <span class="tarif-tag">⭐ Le plus populaire</span>
+      <div class="tarif-name">Adulte All Access</div>
+      <div class="tarif-price"><sup>€</sup>220</div>
+      <span class="tarif-period">Par an • 15 ans et +</span>
+      <ul class="tarif-features">
+        <li>Cours illimités toutes disciplines</li>
+        <li>Licence FFB incluse</li>
+        <li>Accès Open Gym samedi</li>
+        <li>Préparation compétition</li>
+        <li>Assurance sportive comprise</li>
+        <li>-10% cours particuliers</li>
+      </ul>
+      <a href="#contact" class="btn-tarif">S'inscrire maintenant</a>
+    </div>
+    <div class="tarif-card reveal">
+      <span class="tarif-tag">Tarif Famille</span>
+      <div class="tarif-name">Pack Famille</div>
+      <div class="tarif-price"><sup>€</sup>380</div>
+      <span class="tarif-period">Par an • Famille (2+ membres)</span>
+      <ul class="tarif-features">
+        <li>2 membres ou plus du foyer</li>
+        <li>Toutes disciplines incluses</li>
+        <li>Licences FFB incluses</li>
+        <li>Accès Open Gym</li>
+        <li>Assurance sportive comprise</li>
+      </ul>
+      <a href="#contact" class="btn-tarif">Pack Famille</a>
+    </div>
+  </div>
+  <p style="text-align:center; margin-top:30px; font-size:13px; color:rgba(240,237,232,0.35); letter-spacing:1px;">
+    Paiement en 3 fois sans frais possible • Tarifs réduits sur présentation de justificatif (RSA, chômage, étudiant)
+  </p>
+</section>
+
+<!-- CONTACT -->
+<section class="contact" id="contact">
+  <div class="contact-left reveal">
+    <div class="section-header">
+      <div class="section-eyebrow">Rejoignez-nous</div>
+      <h2 class="section-title">Contactez le club</h2>
+    </div>
+    <div class="contact-info-item">
+      <div class="contact-icon">📍</div>
+      <div>
+        <span class="contact-label">Adresse</span>
+        <span class="contact-value">Gymnase Municipal de la Libération<br>15 Rue de la Libération, 57100 Thionville</span>
+      </div>
+    </div>
+    <div class="contact-info-item">
+      <div class="contact-icon">📞</div>
+      <div>
+        <span class="contact-label">Téléphone</span>
+        <span class="contact-value">03 87 XX XX XX</span>
+      </div>
+    </div>
+    <div class="contact-info-item">
+      <div class="contact-icon">📧</div>
+      <div>
+        <span class="contact-label">Email</span>
+        <span class="contact-value">contact@acier-boxing.fr</span>
+      </div>
+    </div>
+    <div class="contact-info-item">
+      <div class="contact-icon">🕐</div>
+      <div>
+        <span class="contact-label">Secrétariat</span>
+        <span class="contact-value">Lundi, Mercredi & Vendredi<br>17h00 – 19h00 (pendant les cours)</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-right reveal">
+    <div class="contact-form">
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Prénom</label>
+          <input type="text" class="form-input" placeholder="Votre prénom">
+        </div>
+        <div class="form-group">
+          <label class="form-label">Nom</label>
+          <input type="text" class="form-input" placeholder="Votre nom">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Email</label>
+        <input type="email" class="form-input" placeholder="votre@email.com">
+      </div>
+      <div class="form-group">
+        <label class="form-label">Téléphone</label>
+        <input type="tel" class="form-input" placeholder="06 XX XX XX XX">
+      </div>
+      <div class="form-row">
+        <div class="form-group">
+          <label class="form-label">Programme souhaité</label>
+          <select class="form-select form-input">
+            <option value="">Choisir...</option>
+            <option>Boxe Éducative (Enfant)</option>
+            <option>Fitness Boxing</option>
+            <option>Boxe Anglaise</option>
+            <option>Boxe Féminine</option>
+            <option>Compétition</option>
+            <option>Cours Particuliers</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Âge</label>
+          <input type="number" class="form-input" placeholder="Votre âge">
+        </div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Message (optionnel)</label>
+        <textarea class="form-textarea" placeholder="Questions, expérience, objectifs..."></textarea>
+      </div>
+      <button class="btn-submit" onclick="alert('Merci ! Nous vous recontacterons très bientôt. 🥊')">
+        Envoyer ma demande
+      </button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="footer-logo">ABC — Acier Boxing Club</div>
+  <div class="footer-copy">© 2025 Acier Boxing Club • Association loi 1901</div>
+  <ul class="footer-links">
+    <li><a href="#">Mentions légales</a></li>
+    <li><a href="#">Statuts de l'asso</a></li>
+    <li><a href="#">FFB</a></li>
+  </ul>
+</footer>
+
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+  // CURSOR
+  const cursor = document.getElementById('cursor');
+  const ring = document.getElementById('cursor-ring');
+  let mx = 0, my = 0, rx = 0, ry = 0;
+
+  document.addEventListener('mousemove', e => {
+    mx = e.clientX; my = e.clientY;
+    cursor.style.left = mx + 'px';
+    cursor.style.top = my + 'px';
+  });
+
+  function animateRing() {
+    rx += (mx - rx) * 0.12;
+    ry += (my - ry) * 0.12;
+    ring.style.left = rx + 'px';
+    ring.style.top = ry + 'px';
+    requestAnimationFrame(animateRing);
+  }
+  animateRing();
+
+  // Scale cursor on hover
+  document.querySelectorAll('a, button, .program-card, .coach-card, .tarif-card, .session').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(2)';
+      ring.style.transform = 'translate(-50%, -50%) scale(1.5)';
+      ring.style.borderColor = 'rgba(200,0,26,0.8)';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursor.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.transform = 'translate(-50%, -50%) scale(1)';
+      ring.style.borderColor = 'rgba(200,0,26,0.5)';
+    });
+  });
+
+  // SCROLL REVEAL
+  const reveals = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  reveals.forEach(el => observer.observe(el));
+
+  // NAV shrink on scroll
+  const nav = document.querySelector('nav');
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 80) {
+      nav.style.background = 'rgba(43,43,53,0.97)';
+      nav.style.backdropFilter = 'blur(10px)';
+      nav.style.padding = '14px 60px';
+    } else {
+      nav.style.background = 'linear-gradient(to bottom, rgba(43,43,53,0.95), transparent)';
+      nav.style.backdropFilter = 'blur(2px)';
+      nav.style.padding = '20px 60px';
+    }
+  });
+</script>
+</body>
+</html>
